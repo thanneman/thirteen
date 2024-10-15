@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { UserRoundPlus, UserRoundMinus, House } from 'lucide-react'
 import Link from 'next/link'
 import { useGame } from '@/context/GameContext'
@@ -98,21 +98,24 @@ export default function GamePage() {
         <CardHeader>
             <CardTitle className='text-2xl font-bold text-center'>Current Game</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className='px-3'>
             <div className='flex items-center justify-center mb-4 space-x-4'>
-            <Button onClick={handleAddPlayer} className='mr-2'>
-                <UserRoundPlus className='w-4 h-4 mr-2' /> Add Player
+            <Button onClick={handleAddPlayer} className='flex items-center justify-center'>
+                <UserRoundPlus className='w-4 h-4 mr-0 sm:mr-2' />
+                <span className='hidden sm:block'>Add Player</span>
             </Button>
-            <Button onClick={handleRemovePlayer} variant='outline' className='mr-2'>
-                <UserRoundMinus className='w-4 h-4 mr-2' /> Remove Player
+            <Button onClick={handleRemovePlayer} variant='outline' className='flex items-center justify-center'>
+                <UserRoundMinus className='w-4 h-4 mr-0 sm:mr-2' />
+                <span className='hidden sm:block'>Remove Player</span>
             </Button>
             <Dialog open={showHomeDialog} onOpenChange={setShowHomeDialog}>
             <DialogTrigger asChild>
-                <Button variant="outline">
-                <House className='w-4 h-4 mr-2' /> Main Menu
+                <Button variant='outline' className='flex items-center justify-center'>
+                    <House className='w-4 h-4 mr-0 sm:mr-2' />
+                    <span className='hidden sm:block'>Main Menu</span>
                 </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className='w-11/12 rounded-md'>
                 <DialogHeader>
                 <DialogTitle>Return to Main Menu?</DialogTitle>
                 <DialogDescription>
@@ -120,9 +123,9 @@ export default function GamePage() {
                 </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                <Button variant="outline" onClick={() => setShowHomeDialog(false)}>Cancel</Button>
-                <Link href="/">
-                    <Button>Confirm</Button>
+                <Button variant='outline' className='mt-3 sm:mt-0' onClick={() => setShowHomeDialog(false)}>Cancel</Button>
+                <Link href='/'>
+                    <Button className='w-full sm:w-auto'>Confirm</Button>
                 </Link>
                 </DialogFooter>
             </DialogContent>
@@ -132,13 +135,13 @@ export default function GamePage() {
             <Table>
                 <TableHeader>
                 <TableRow>
-                    <TableHead className='w-24'>Hand</TableHead>
+                    <TableHead className='p-1 sm:p-2'>Hand</TableHead>
                     {players.map((player, index) => (
-                    <TableHead key={index} className='text-center'>
+                    <TableHead key={index} className='p-1 text-center sm:p-2'>
                         <Input
                         value={player.name}
                         onChange={(e) => handlePlayerNameChange(index, e.target.value)}
-                        className='text-center'
+                        className='p-1 text-center sm:p-2'
                         placeholder='Player Name'
                         />
                     </TableHead>
@@ -148,37 +151,37 @@ export default function GamePage() {
                 <TableBody>
                 {Object.entries(scores).map(([hand, handScores]) => (
                     <TableRow key={hand}>
-                    <TableCell className='font-medium'>{hand} cards</TableCell>
+                    <TableCell className='p-1 font-medium sm:p-2'>{hand}</TableCell>
                     {handScores.map((score, playerIndex) => (
-                        <TableCell key={playerIndex}>
-                        <Input
-                            type='number'
-                            value={score || ''}
-                            onChange={(e) => handleScoreChange(parseInt(hand), playerIndex, e.target.value)}
-                            className='w-full text-center'
-                            inputMode='numeric'
-                            min='0'
-                        />
+                        <TableCell key={playerIndex} className='p-1 sm:p-2'>
+                            <Input
+                                type='number'
+                                value={score || ''}
+                                onChange={(e) => handleScoreChange(parseInt(hand), playerIndex, e.target.value)}
+                                className='w-full p-1 text-center sm:p-2'
+                                inputMode='numeric'
+                                min='0'
+                            />
                         </TableCell>
                     ))}
                     </TableRow>
                 ))}
                 <TableRow>
-                    <TableCell className='font-bold'>Total</TableCell>
+                    <TableCell className='p-1 font-bold sm:p-2'>Total</TableCell>
                     {players.map((_, index) => (
-                    <TableCell key={index} className='font-bold text-center'>
+                    <TableCell key={index} className='p-1 font-bold text-center sm:p-2'>
                         {calculateTotal(index)}
                     </TableCell>
                     ))}
                 </TableRow>
                 </TableBody>
             </Table>
-            <div className="flex justify-center mt-4 space-x-4">
+            <div className='flex justify-center mt-4 space-x-4'>
             <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
             <DialogTrigger asChild>
                 <Button>Reset Game</Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className='w-11/12 rounded-md'>
                 <DialogHeader>
                 <DialogTitle>Reset Game?</DialogTitle>
                 <DialogDescription>
@@ -186,8 +189,8 @@ export default function GamePage() {
                 </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                <Button variant="outline" onClick={() => setShowResetDialog(false)}>Cancel</Button>
-                <Button onClick={() => {
+                <Button variant='outline' className='mt-3 sm:mt-0' onClick={() => setShowResetDialog(false)}>Cancel</Button>
+                <Button className='w-full sm:w-auto' onClick={() => {
                     resetGame()
                     setShowResetDialog(false)
                 }}>Confirm</Button>
@@ -198,7 +201,7 @@ export default function GamePage() {
             <DialogTrigger asChild>
                 <Button>Submit Game</Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className='w-11/12 rounded-md'>
                 <DialogHeader>
                 <DialogTitle>Submit Game?</DialogTitle>
                 <DialogDescription>
@@ -206,8 +209,8 @@ export default function GamePage() {
                 </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                <Button variant="outline" onClick={() => setShowEndDialog(false)}>Cancel</Button>
-                <Button onClick={() => {
+                <Button variant='outline' className='mt-3 sm:mt-0' onClick={() => setShowEndDialog(false)}>Cancel</Button>
+                <Button className='w-full sm:w-auto' onClick={() => {
                     handleGameEnd()
                     setShowEndDialog(false)
                 }}>Confirm</Button>

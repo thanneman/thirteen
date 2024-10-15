@@ -15,21 +15,22 @@ export default function HistoryPage() {
   }
 
   return (
-    <div className='container p-4 mx-auto'>
+    <>
         <h1 className='mb-8 text-3xl font-bold text-center'>Game History</h1>
-        <div className='flex justify-center mb-4'>
+        <div className='flex justify-center mb-8'>
             <Link href='/'>
             <Button variant='outline'>
-                <House className='w-4 h-4 mr-2' /> Main Menu
+                <House className='w-4 h-4 mr-2' />
+                <span>Main Menu</span>
             </Button>
             </Link>
         </div>
         {games.map((game) => (
             <Card key={game.id} className='mb-4'>
-            <CardHeader>
-                <CardTitle className='text-lg'>{new Date(game.date).toLocaleString()}</CardTitle>
+            <CardHeader className='p-4'>
+                <CardTitle className='text-lg text-center sm:text-left'>{new Date(game.date).toLocaleString()}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className='px-4 pb-4'>
                 <Table>
                 <TableHeader>
                     <TableRow>
@@ -49,6 +50,6 @@ export default function HistoryPage() {
             </CardContent>
             </Card>
         ))}
-    </div>
+    </>
   )
 }
