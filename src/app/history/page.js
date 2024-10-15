@@ -19,35 +19,35 @@ export default function HistoryPage() {
         <h1 className='mb-8 text-3xl font-bold text-center'>Game History</h1>
         <div className='flex justify-center mb-8'>
             <Link href='/'>
-            <Button variant='outline'>
-                <House className='w-4 h-4 mr-2' />
-                <span>Main Menu</span>
-            </Button>
+                <Button variant='outline'>
+                    <House className='w-4 h-4 mr-2' />
+                    <span>Main Menu</span>
+                </Button>
             </Link>
         </div>
         {games.map((game) => (
             <Card key={game.id} className='mb-4'>
-            <CardHeader className='p-4'>
-                <CardTitle className='text-lg text-center sm:text-left'>{new Date(game.date).toLocaleString()}</CardTitle>
-            </CardHeader>
-            <CardContent className='px-4 pb-4'>
-                <Table>
-                <TableHeader>
-                    <TableRow>
-                    <TableHead>Player</TableHead>
-                    <TableHead>Score</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {game.players.map((player, index) => (
-                    <TableRow key={`${player.name}-${index}`}>
-                        <TableCell>{player.name}</TableCell>
-                        <TableCell>{calculateTotal(game.scores, index)}</TableCell>
-                    </TableRow>
-                    ))}
-                </TableBody>
-                </Table>
-            </CardContent>
+                <CardHeader className='p-4'>
+                    <CardTitle className='text-lg text-center sm:text-left'>{new Date(game.date).toLocaleString()}</CardTitle>
+                </CardHeader>
+                <CardContent className='px-4 pb-4'>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Player</TableHead>
+                                <TableHead>Score</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {game.players.map((player, index) => (
+                                <TableRow key={`${player.name}-${index}`}>
+                                    <TableCell>{player.name}</TableCell>
+                                    <TableCell>{calculateTotal(game.scores, index)}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </CardContent>
             </Card>
         ))}
     </>
