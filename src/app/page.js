@@ -12,7 +12,12 @@ export default function IndexPage() {
 
     const topPlayers = players.slice(0, 5)
     const highestScore = players.reduce((max, player) => (player.highest_score > max.highest_score ? player : max), { highest_score: 0 })
-    const lowestScore = players.reduce((min, player) => (player.lowest_score < min.lowest_score || min.lowest_score === 0 ? player : min), { lowest_score: Infinity })
+    const lowestScore = players.reduce((min, player) => {
+        if (min.lowest_score === undefined || player.lowest_score < min.lowest_score) {
+            return player;
+        }
+        return min;
+    }, { lowest_score: undefined })
 
     return (
         <>
@@ -59,7 +64,7 @@ export default function IndexPage() {
                 </Table>
                 <div className='mt-4 text-center'>
                     <p><strong>Highest Score:</strong> {highestScore.highest_score} - {highestScore.name}</p>
-                    <p><strong>Lowest Score:</strong> {lowestScore.lowest_score} - {lowestScore.name}</p>
+                    <p><strong>Lowest Score:</strong> {lowestScore.lowest_score !== undefined ? `${lowestScore.lowest_score} - ${lowestScore.name}` : 'N/A'}</p>
                 </div>
             </CardContent>
             </Card>
