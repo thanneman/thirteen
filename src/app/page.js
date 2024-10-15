@@ -63,7 +63,7 @@ export default function IndexPage() {
                 </TableBody>
                 </Table>
                 <div className='mt-4 text-center'>
-                    <p><strong>Highest Score:</strong> {highestScore.highest_score !== 0 ? `{highestScore.highest_score} - {highestScore.name}` : 'N/A'}</p>
+                    <p><strong>Highest Score:</strong> {highestScore.highest_score !== 0 ? `${highestScore.highest_score} - ${highestScore.name}` : 'N/A'}</p>
                     <p><strong>Lowest Score:</strong> {lowestScore.lowest_score !== undefined ? `${lowestScore.lowest_score} - ${lowestScore.name}` : 'N/A'}</p>
                 </div>
             </CardContent>
