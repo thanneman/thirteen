@@ -8,60 +8,60 @@ import Link from 'next/link'
 import { useGame } from '../context/GameContext'
 
 export default function IndexPage() {
-  const { players } = useGame()
+    const { players } = useGame()
 
-  const topPlayers = players.slice(0, 5)
-  const highestScore = players.reduce((max, player) => (player.highest_score > max.highest_score ? player : max), { highest_score: 0 })
-  const lowestScore = players.reduce((min, player) => (player.lowest_score < min.lowest_score || min.lowest_score === 0 ? player : min), { lowest_score: Infinity })
+    const topPlayers = players.slice(0, 5)
+    const highestScore = players.reduce((max, player) => (player.highest_score > max.highest_score ? player : max), { highest_score: 0 })
+    const lowestScore = players.reduce((min, player) => (player.lowest_score < min.lowest_score || min.lowest_score === 0 ? player : min), { lowest_score: Infinity })
 
-  return (
+    return (
     <>
-      <h1 className='mb-8 text-3xl font-bold text-center'>Thirteen Score Tracker</h1>
-      
-      <div className='flex justify-center mb-8 space-x-4'>
+        <h1 className='mb-8 text-3xl font-bold text-center'>Thirteen Score Tracker</h1>
+        
+        <div className='flex justify-center mb-8 space-x-4'>
         <Link href='/game'>
-          <Button>
+            <Button>
             <Play className='w-4 h-4 mr-2' /> New Game
-          </Button>
+            </Button>
         </Link>
         <Link href='/history'>
-          <Button variant='outline'>
+            <Button variant='outline'>
             <History className='w-4 h-4 mr-2' /> Game History
-          </Button>
+            </Button>
         </Link>
-      </div>
+        </div>
 
-      <Card className='mt-8'>
+        <Card className='mt-8'>
         <CardHeader>
-          <CardTitle className='flex items-center'>
+            <CardTitle className='flex items-center'>
             <Trophy className='w-5 h-5 mr-2' />
             Scoreboard
-          </CardTitle>
+            </CardTitle>
         </CardHeader>
         <CardContent>
-          <h4 className='mb-2 font-semibold'>Top 5 Players</h4>
-          <Table>
+            <h2 className='mb-2 font-semibold'>Top 5 Players</h2>
+            <Table>
             <TableHeader>
-              <TableRow>
+                <TableRow>
                 <TableHead>Player</TableHead>
                 <TableHead>Wins</TableHead>
-              </TableRow>
+                </TableRow>
             </TableHeader>
             <TableBody>
-              {topPlayers.map((player, index) => (
+                {topPlayers.map((player, index) => (
                 <TableRow key={`${player.name}-${index}`}>
-                  <TableCell>{player.name}</TableCell>
-                  <TableCell>{player.wins}</TableCell>
+                    <TableCell>{player.name}</TableCell>
+                    <TableCell>{player.wins}</TableCell>
                 </TableRow>
-              ))}
+                ))}
             </TableBody>
-          </Table>
-          <div className='mt-4'>
+            </Table>
+            <div className='mt-4'>
             <p><strong>Highest Score:</strong> {highestScore.highest_score} - {highestScore.name}</p>
             <p><strong>Lowest Score:</strong> {lowestScore.lowest_score} - {lowestScore.name}</p>
-          </div>
+            </div>
         </CardContent>
-      </Card>
+        </Card>
     </>
-  )
+    )
 }

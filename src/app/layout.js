@@ -5,6 +5,10 @@ import './globals.css';
 export const metadata = {
   title: 'Thirteen Score Tracker',
   description: 'Thirteen Score Tracker',
+  robots: {
+    index: false,
+    follow: false
+  }
 };
 
 const inter = Inter({ subsets: ['latin'] });

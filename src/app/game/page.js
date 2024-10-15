@@ -67,16 +67,6 @@ export default function GamePage() {
         return totals.indexOf(winningScore)
     }
 
-    // const handleGameEnd = async () => {
-    //     const gameResult = {
-    //         date: new Date().toISOString(),
-    //         players: players.map((player, index) => ({ ...player, index })),
-    //         scores: scores,
-    //     }
-        
-    //     await addGame(gameResult)
-    //     router.push('/history')
-    // }
     const handleGameEnd = async () => {
         const winnerIndex = determineWinner()
         const gameResult = {
