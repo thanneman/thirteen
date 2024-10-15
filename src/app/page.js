@@ -39,10 +39,10 @@ export default function IndexPage() {
 
             <Card className='mt-8'>
             <CardHeader className='items-center'>
-                <CardTitle className='flex items-center'>
+                <div className='flex items-center'>
                     <Trophy className='w-5 h-5 mr-2' />
-                    <h2>Scoreboard</h2>
-                </CardTitle>
+                    <h2 className='text-2xl font-semibold leading-none tracking-tight'>Scoreboard</h2>
+                </div>
             </CardHeader>
             <CardContent>
                 <h3 className='mb-2 font-semibold text-center'>Top 5 Players</h3>
@@ -63,7 +63,7 @@ export default function IndexPage() {
                 </TableBody>
                 </Table>
                 <div className='mt-4 text-center'>
-                    <p><strong>Highest Score:</strong> {highestScore.highest_score} - {highestScore.name}</p>
+                    <p><strong>Highest Score:</strong> {highestScore.highest_score !== 0 ? `{highestScore.highest_score} - {highestScore.name}` : 'N/A'}</p>
                     <p><strong>Lowest Score:</strong> {lowestScore.lowest_score !== undefined ? `${lowestScore.lowest_score} - ${lowestScore.name}` : 'N/A'}</p>
                 </div>
             </CardContent>
