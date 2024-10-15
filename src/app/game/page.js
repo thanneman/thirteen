@@ -142,7 +142,6 @@ export default function GamePage() {
                         value={player.name}
                         onChange={(e) => handlePlayerNameChange(index, e.target.value)}
                         className='p-1 text-center sm:p-2'
-                        placeholder='Player Name'
                         />
                     </TableHead>
                     ))}
@@ -156,7 +155,7 @@ export default function GamePage() {
                         <TableCell key={playerIndex} className='p-1 sm:p-2'>
                             <Input
                                 type='number'
-                                value={score || ''}
+                                value={score || 0}
                                 onChange={(e) => handleScoreChange(parseInt(hand), playerIndex, e.target.value)}
                                 className='w-full p-1 text-center sm:p-2'
                                 inputMode='numeric'
