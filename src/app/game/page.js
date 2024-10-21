@@ -27,7 +27,7 @@ export default function GamePage() {
     useEffect(() => {
         const initialScores = {}
         for (let i = 3; i <= 13; i++) {
-        initialScores[i] = Array(players.length).fill(0)
+            initialScores[i] = Array(players.length).fill(0)
         }
         setScores(initialScores)
     }, [players.length])
@@ -39,7 +39,7 @@ export default function GamePage() {
 
     const handleRemovePlayer = () => {
         if (players.length > 2) {
-        setPlayers(players.slice(0, -1))
+            setPlayers(players.slice(0, -1))
         }
     }
 
@@ -52,11 +52,12 @@ export default function GamePage() {
     const handleScoreChange = (hand, playerIndex, value) => {
         const newScore = Math.max(0, parseInt(value) || 0)
         setScores(prevScores => ({
-        ...prevScores,
-        [hand]: prevScores[hand].map((score, index) => (index === playerIndex ? newScore : score))
+            ...prevScores,
+            [hand]: prevScores[hand].map((score, index) => (index === playerIndex ? newScore : score))
         }))
         setIsGameStarted(true)
     }
+
     const calculateTotal = (playerIndex) => {
         return Object.values(scores).reduce((total, handScores) => total + handScores[playerIndex], 0)
     }
@@ -99,12 +100,13 @@ export default function GamePage() {
                 <CardTitle className='text-2xl font-bold text-center'>Current Game</CardTitle>
             </CardHeader>
             <CardContent className='px-3'>
+                {/* todo - add skip to content and skip content to end nav */}
                 <div className='flex items-center justify-center mb-4 space-x-4'>
                     <Button onClick={handleAddPlayer} className='flex items-center justify-center'>
                         <UserRoundPlus className='w-4 h-4 mr-0 sm:mr-2' />
                         <span className='hidden sm:block'>Add Player</span>
                     </Button>
-                    <Button onClick={handleRemovePlayer} variant='outline' className='flex items-center justify-center'>
+                    <Button onClick={handleRemovePlayer} variant='outline' className='flex items-center justify-center' disabled={players.length <= 2}>
                         <UserRoundMinus className='w-4 h-4 mr-0 sm:mr-2' />
                         <span className='hidden sm:block'>Remove Player</span>
                     </Button>
@@ -124,9 +126,9 @@ export default function GamePage() {
                             </DialogHeader>
                             <DialogFooter>
                                 <Button variant='outline' className='mt-3 sm:mt-0' onClick={() => setShowHomeDialog(false)}>Cancel</Button>
-                                <Link href='/'>
-                                    <Button className='w-full sm:w-auto'>Confirm</Button>
-                                </Link>
+                                <Button className='w-full sm:w-auto' asChild>
+                                    <Link href='/'>Confirm</Link>
+                                </Button>
                             </DialogFooter>
                         </DialogContent>
                     </Dialog>

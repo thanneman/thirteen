@@ -18,12 +18,12 @@ export default function HistoryPage() {
     <>
         <h1 className='mb-8 text-3xl font-bold text-center'>Game History</h1>
         <div className='flex justify-center mb-8'>
-            <Link href='/'>
-                <Button variant='outline'>
+            <Button variant='outline' asChild>
+                <Link href='/'>
                     <House className='w-4 h-4 mr-2' />
                     <span>Main Menu</span>
-                </Button>
-            </Link>
+                </Link>
+            </Button>
         </div>
         {games.map((game) => (
             <Card key={game.id} className='mb-4'>
