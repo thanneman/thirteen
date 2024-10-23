@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
@@ -88,7 +89,7 @@ export default function GamePage() {
     const resetGame = () => {
         const newScores = {}
         for (let i = 3; i <= 13; i++) {
-        newScores[i] = Array(players.length).fill(0)
+            newScores[i] = Array(players.length).fill(0)
         }
         setScores(newScores)
         setIsGameStarted(false)
@@ -140,7 +141,10 @@ export default function GamePage() {
                             <TableHead className='p-1 sm:p-2'>Hand</TableHead>
                             {players.map((player, index) => (
                                 <TableHead key={index} className='p-1 text-center sm:p-2'>
+                                    <Label htmlFor={`player-${index}`} className='sr-only'>Player {index + 1} name</Label>
                                     <Input
+                                        name={`player-${index}`}
+                                        id={`player-${index}`}
                                         value={player.name}
                                         onChange={(e) => handlePlayerNameChange(index, e.target.value)}
                                         className='p-1 text-center sm:p-2'
@@ -155,7 +159,12 @@ export default function GamePage() {
                                 <TableCell className='p-1 font-medium sm:p-2'>{hand}</TableCell>
                                     {handScores.map((score, playerIndex) => (
                                         <TableCell key={playerIndex} className='p-1 sm:p-2'>
+                                            {players[playerIndex] && (
+                                            <>
+                                            <Label htmlFor={`hand-${hand}-player-${playerIndex}`} className='sr-only'>Score for {players[playerIndex].name} on hand {hand}</Label>
                                             <Input
+                                                name={`hand-${hand}-player-${playerIndex}`}
+                                                id={`hand-${hand}-player-${playerIndex}`}
                                                 type='number'
                                                 value={score || ''}
                                                 onChange={(e) => handleScoreChange(parseInt(hand), playerIndex, e.target.value)}
@@ -163,6 +172,8 @@ export default function GamePage() {
                                                 inputMode='numeric'
                                                 min='0'
                                             />
+                                            </>
+                                            )}
                                         </TableCell>
                                     ))}
                             </TableRow>

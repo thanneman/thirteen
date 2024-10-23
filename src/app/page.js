@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Trophy, Play, History, Info } from 'lucide-react'
 import Link from 'next/link'
 import { useGame } from '../context/GameContext'
@@ -27,33 +27,11 @@ export default function IndexPage() {
             acc.totalPlayers++
         })
         return acc
-        }, { totalScore: 0, totalPlayers: 0 })
-        const avgScore = totalPlayers > 0 ? totalScore / totalPlayers : 0
-
-    const mostConsistentPlayer = players.reduce((most, player) => {
-        const difference = player.highest_score - player.lowest_score
-        return difference < most.difference && player.games_played > 0 ? { name: player.name, difference } : most
-    }, { name: '', difference: Infinity })
-
-    const scoreCounts = games.reduce((counts, game) => {
-        game.players.forEach(player => {
-        counts[player.score] = (counts[player.score] || 0) + 1
-        })
-        return counts
-    }, {})
-
-    const luckyNumber = Object.entries(scoreCounts).reduce((lucky, [score, count]) => {
-        return count > lucky.count ? { number: parseInt(score), count } : lucky
-    }, { number: 0, count: 0 })
-
-    const unluckyNumber = Object.entries(scoreCounts).reduce((unlucky, [score, count]) => {
-        return count > unlucky.count && parseInt(score) > luckyNumber.number ? { number: parseInt(score), count } : unlucky
-    }, { number: 0, count: 0 })
-
-    // const isLoading = players.length === 0 || games.length === 0
+    }, { totalScore: 0, totalPlayers: 0 })
+    const avgScore = totalPlayers > 0 ? totalScore / totalPlayers : 0
 
     return (
-        <TooltipProvider>
+        <>
             <h1 className='mb-8 text-3xl font-bold text-center'>Thirteen Score Tracker</h1>
             <div className='flex justify-center mb-4 space-x-4'>
                 <Button asChild>
@@ -81,16 +59,16 @@ export default function IndexPage() {
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead>Player</TableHead>
-                                <TableHead>Wins</TableHead>
+                                <TableHead className='w-1/2'>Player</TableHead>
+                                <TableHead className='w-1/2'>Wins</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {isLoading
                                 ? Array(5).fill(0).map((_, index) => (
                                     <TableRow key={index}>
-                                    <TableCell><Skeleton className="h-4 w-[100px]" /></TableCell>
-                                    <TableCell><Skeleton className="h-4 w-[50px]" /></TableCell>
+                                    <TableCell><Skeleton className='h-4 w-[100px]' /></TableCell>
+                                    <TableCell><Skeleton className='h-4 w-[50px]' /></TableCell>
                                     </TableRow>
                                 ))
                                 : topPlayers.map((player, index) => (
@@ -104,98 +82,73 @@ export default function IndexPage() {
                     <div className='mt-4 space-y-2 text-center'>
                             {isLoading ? (
                             <>
-                                <Skeleton className="h-4 w-[200px] mx-auto" />
-                                <Skeleton className="h-4 w-[200px] mx-auto" />
-                                <Skeleton className="h-4 w-[200px] mx-auto" />
-                                <Skeleton className="h-4 w-[200px] mx-auto" />
-                                <Skeleton className="h-4 w-[200px] mx-auto" />
-                                <Skeleton className="h-4 w-[200px] mx-auto" />
-                                <Skeleton className="h-4 w-[200px] mx-auto" />
+                                <Skeleton className='h-4 w-[200px] mx-auto' />
+                                <Skeleton className='h-4 w-[200px] mx-auto' />
+                                <Skeleton className='h-4 w-[200px] mx-auto' />
+                                <Skeleton className='h-4 w-[200px] mx-auto' />
+                                <Skeleton className='h-4 w-[200px] mx-auto' />
+                                <Skeleton className='h-4 w-[200px] mx-auto' />
+                                <Skeleton className='h-4 w-[200px] mx-auto' />
                             </>
                         ) : (
                             <>
                                 <div className='flex items-center justify-center'>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Info className="inline w-4 h-4 mr-1" />
-                                        </TooltipTrigger>
-                                        <TooltipContent>
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <Button variant='link' className='h-auto p-0.5'>
+                                                <Info className='inline w-4 h-4 mr-1' />
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent align='start' className='text-center text-balance'>
                                             <p>The highest score achieved by any player in a single game</p>
-                                        </TooltipContent>
-                                    </Tooltip>
+                                        </PopoverContent>
+                                    </Popover>
                                     <p><strong>Highest Score:</strong> {highestScore.highest_score !== 0 ? `${highestScore.highest_score} - ${highestScore.name}` : 'N/A'}</p>
                                 </div>
                                 <div className='flex items-center justify-center'>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Info className="inline w-4 h-4 mr-1" />
-                                        </TooltipTrigger>
-                                        <TooltipContent>
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <Button variant='link' className='h-auto p-0.5'>
+                                                <Info className='inline w-4 h-4 mr-1' />
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent align='start' className='text-center text-balance'>
                                             <p>The lowest score achieved by any player in a single game</p>
-                                        </TooltipContent>
-                                    </Tooltip>
+                                        </PopoverContent>
+                                    </Popover>
                                     <p><strong>Lowest Score:</strong> {lowestScore.lowest_score !== undefined ? `${lowestScore.lowest_score} - ${lowestScore.name}` : 'N/A'}</p>
                                 </div>
                                 <div className='flex items-center justify-center'>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Info className="inline w-4 h-4 mr-1" />
-                                        </TooltipTrigger>
-                                        <TooltipContent>
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <Button variant='link' className='h-auto p-0.5'>
+                                                <Info className='inline w-4 h-4 mr-1' />
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent align='start' className='text-center text-balance'>
                                             <p>The average score across all games and players</p>
-                                        </TooltipContent>
-                                    </Tooltip>
+                                        </PopoverContent>
+                                    </Popover>
                                     <p><strong>Average Score:</strong> {avgScore.toFixed(2)}</p>
                                 </div>
                                 <div className='flex items-center justify-center'>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Info className="inline w-4 h-4 mr-1" />
-                                        </TooltipTrigger>
-                                        <TooltipContent>
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <Button variant='link' className='h-auto p-0.5'>
+                                                <Info className='inline w-4 h-4 mr-1' />
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent align='start' className='text-center text-balance'>
                                             <p>The total number of games played</p>
-                                        </TooltipContent>
-                                    </Tooltip>
+                                        </PopoverContent>
+                                    </Popover>
                                     <p><strong>Total Games:</strong> {totalGames}</p>
-                                </div>
-                                <div className='flex items-center justify-center'>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Info className="inline w-4 h-4 mr-1" />
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p>The player with the smallest difference between their highest and lowest scores</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                    <span><strong>Most Consistent:</strong> {mostConsistentPlayer.name ? `${mostConsistentPlayer.name} (Difference: ${mostConsistentPlayer.difference})` : 'N/A'}</span>
-                                </div>
-                                <div className='flex items-center justify-center'>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Info className="inline w-4 h-4 mr-1" />
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p>The total score that appears most frequently across all games</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                    <p><strong>Lucky Score:</strong> {luckyNumber.number ? `${luckyNumber.number} (Appeared ${luckyNumber.count} times)` : 'N/A'}</p>
-                                </div>
-                                <div className='flex items-center justify-center'>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Info className="inline w-4 h-4 mr-1" />
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p>The highest total score that appears frequently, potentially indicating a common losing score</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                    <p><strong>Unlucky Score:</strong> {unluckyNumber.number ? `${unluckyNumber.number} (Appeared ${unluckyNumber.count} times)` : 'N/A'}</p>
                                 </div>
                           </>
                         )}
                     </div>
                 </CardContent>
             </Card>
-        </TooltipProvider>
+        </>
     )
 }

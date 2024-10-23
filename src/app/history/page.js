@@ -34,8 +34,8 @@ export default function HistoryPage() {
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead>Player</TableHead>
-                                <TableHead>Score</TableHead>
+                                <TableHead className='w-1/2'>Player</TableHead>
+                                <TableHead className='w-1/2'>Score</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
